@@ -13,7 +13,7 @@ namespace ScarpeCo.Controllers
     {
         public ActionResult Index()
         {
-            List<Scarpe> scarpe = new List<Scarpe>();
+            List<Scarpe> scarpa = new List<Scarpe>();
             string connectionString = ConfigurationManager.ConnectionStrings["Scarpe"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -30,11 +30,11 @@ namespace ScarpeCo.Controllers
                         d.Nome = reader["Nome"].ToString();
                         d.Descrizione = reader["Descrizione"].ToString();
                         d.Prezzo = Convert.ToDecimal(reader["Prezzo"]);
-                        d.ImgPath = reader["ImgPath"].ToString();
-                        d.ImgAlt1 = reader["ImgAlt1"].ToString();
-                        d.ImgAlt2 = reader["ImgAlt2"].ToString();
+                        d.imgPath = reader["imgPath"].ToString();
+                        d.imgAlt1 = reader["imgAlt1"].ToString();
+                        d.imgAlt2 = reader["imgAlt2"].ToString();
                         d.Visibile = Convert.ToBoolean(reader["Visibile"]);
-                        scarpe.Add(d);
+                        scarpa.Add(d);
                     }
 
                 }
@@ -46,7 +46,7 @@ namespace ScarpeCo.Controllers
                 {
                     conn.Close();
                 }
-                return View(scarpe);
+                return View(scarpa);
             }
 
         }
@@ -59,9 +59,52 @@ namespace ScarpeCo.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "A so Putia re Scarpi";
 
             return View();
+        }
+        
+        [HttpGet]
+        public ActionResult Dettagli(int id)
+        {
+
+            List<Scarpe> scarpa = new List<Scarpe>();
+            string connectionString = ConfigurationManager.ConnectionStrings["Scarpe"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT * FROM SCARPE WHERE IdArticolo = @IdArticolo";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@IdArticolo", id);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Scarpe d = new Scarpe();
+                        d.IdArticolo = Convert.ToInt16(reader["IdArticolo"]);
+                        d.Nome = reader["Nome"].ToString();
+                        d.Descrizione = reader["Descrizione"].ToString();
+                        d.Prezzo = Convert.ToDecimal(reader["Prezzo"]);
+                        d.imgPath = reader["imgPath"].ToString();
+                        d.imgAlt1 = reader["imgAlt1"].ToString();
+                        d.imgAlt2 = reader["imgAlt2"].ToString();
+                        d.Visibile = Convert.ToBoolean(reader["Visibile"]);
+                        scarpa.Add(d);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Response.Write("Errore: " + ex.Message);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+
+            return View(scarpa);
         }
     }
 }

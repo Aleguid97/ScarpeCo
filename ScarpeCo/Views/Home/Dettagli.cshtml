@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ScarpeCo.Models.Scarpe>
+
+@{
+    ViewBag.Title = "Dettagli";
+}
+<div class="container">
+    @foreach (var scarpa in Model)
+    {
+       
+       
+        <div class="container">
+            <div class="row">
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <h2 class="display-4">@scarpa.Nome</h2>
+                        <p class="display-4">@scarpa.Descrizione</p>
+
+                        <p class="display-6"> @scarpa.Prezzo.ToString()€</p>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="@scarpa.imgPath" class="img-fluid shadow" alt="">
+                    </div>
+                    <div class="col-md-4">
+                        <img src="@scarpa.imgAlt1" class="img-fluid shadow" alt="">
+                    </div>
+                    <div class="col-md-4">
+                        <img src="@scarpa.imgAlt2" class="img-fluid shadow" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    }
+</div>
+
+
+
+
+
+

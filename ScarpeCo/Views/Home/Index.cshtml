@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ScarpeCo.Models.Scarpe>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p class="display-3">Ass'Bbinirica</p>
+<h1>Chiffà Vossia nun su ccatta mparu i scarpi?</h1>
+
+<div class="container">
+    <div class="row">
+        @foreach (var scarpa in Model)
+        {
+            
+            <div class="col-md-4">
+                <div class="card m-3 shadow">
+                    <img src="@scarpa.imgPath" class="card-img-top" alt="Scarpe Image">
+                    <div class="card-body">
+                        <h5 class="card-title display-6">@scarpa.Nome</h5>
+                        <p class="card-text display-4">@scarpa.Descrizione</p>
+                        <p class="card-text">Prezzo: @scarpa.Prezzo€</p>
+                        @Html.ActionLink("Dettagli", "Dettagli", new { id = scarpa.IdArticolo }, new { @class = "btn btn-outline-secondary" })
+                        @Html.ActionLink("Delete", "Delete", null, new { @class = "btn btn-secondary", onclick = "return confirm('Vuoi Nascondere l'articolo?');" })
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
